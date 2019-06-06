@@ -27,7 +27,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<%
+<%-- <%
 
 ContactServiceImpl service=new ContactServiceImpl();
 
@@ -36,8 +36,8 @@ ContactServiceImpl service=new ContactServiceImpl();
 	request.setAttribute("list",contactList);  
 
 	
-%>
-<a href="index.jsp">Add Contact</a>
+%> --%>
+<a href="contactbook?action=insert">Add Contact</a>
 
 <h2>Contact List</h2>
 
@@ -57,8 +57,8 @@ ContactServiceImpl service=new ContactServiceImpl();
     <td>${u.getCid()}</td>
     <td>${u.getFullName()}</td>
     <td>${u.getMobileNo()}</td>
-   <td><a href="contactbook?id=${u.getCid()}">Edit</a></td> 
-   <td><a href="contactbook?id=${u.getCid()}">Delete</a></td> 
+   <td><a href="contactbook?action=edit&id=${u.getCid()}">Edit</a></td> 
+   <td><a href="contactbook?action=delete&id=${u.getCid()}">Delete</a></td> 
   </tr>
   
   </c:forEach>
