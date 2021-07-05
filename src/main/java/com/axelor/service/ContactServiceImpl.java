@@ -19,11 +19,16 @@ public class ContactServiceImpl implements ContactService {
 	
 	
 	@Override
-	public void addContact(ContactDetails contactDetails) {
+	public void addContact(String fullname,String mobileno) {
 		
 		EntityManager entityManager=getConnection();
 		
 		entityManager.getTransaction().begin();
+		
+		 ContactDetails contactDetails=new ContactDetails();
+		  contactDetails.setFullName(fullname); 
+		  contactDetails.setMobileNo(mobileno);
+		 
 		
 		entityManager.persist(contactDetails);
 		
@@ -42,6 +47,50 @@ public class ContactServiceImpl implements ContactService {
 		List contactList=query.getResultList();
 		
 		return contactList;
+	}
+
+
+	@Override
+	public void deleteContact(int id) {
+        EntityManager entityManager=getConnection();
+		entityManager.getTransaction().begin();
+		Query query=entityManager.createQuery("delete from ContactDetails where cid =:id");
+		query.setParameter("id", id);
+		query.executeUpdate();		
+		entityManager.getTransaction().commit();
+
+	}
+
+
+	@Override
+	public ContactDetails getContactDetailsById(int id) {
+		
+		EntityManager entityManager=getConnection();
+		entityManager.getTransaction().begin();
+		Query query=entityManager.createQuery("from ContactDetails where cid =:id");
+		query.setParameter("id",id);
+		ContactDetails contactDetails=(ContactDetails) query.getSingleResult();
+		
+		return contactDetails;
+	}
+
+
+	@Override
+	public void updateContact(int cid, String fullname, String mobileno) {
+		
+		EntityManager entityManager=getConnection();
+		entityManager.getTransaction().begin();
+		
+		Query query=entityManager.createQuery("update ContactDetails set fullName=:fullname , mobileNo =:mobileno where cid=:id");
+		query.setParameter("fullname", fullname);
+		query.setParameter("mobileno", mobileno);
+		query.setParameter("id", cid);
+		
+		query.executeUpdate();
+		entityManager.getTransaction().commit();
+		
+		
+		
 	}
 
 }
